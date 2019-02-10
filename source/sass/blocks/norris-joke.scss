@@ -1,0 +1,67 @@
+.norris-joke {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 490px;
+  margin-bottom: 60px;
+}
+
+.norris-joke__wrapper {
+  &::before,
+  &::after {
+    content: "";
+
+    display: block;
+    width: 100%;
+    height: 95px;
+
+    background-image: url("../img/chuck-norris-dancing.gif");
+    background-repeat: repeat-x;
+  }
+}
+
+.norris-joke__description {
+  @include h-reset;
+
+  box-sizing: border-box;
+  margin-top: 27px;
+  margin-bottom: 39px;
+  padding-left: 40px;
+
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.norris-joke__random-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 165px;
+  height: 50px;
+  margin-top: 50px;
+  margin-left: 34px;
+  padding-right: 0;
+  padding-left: 0;
+
+  font-size: 25px;
+  color: #de5f3e;
+
+  background-color: transparent;
+  border: 2px solid #de5f3e;
+  border-radius: 7px;
+
+  transition: opacity 0.2s ease-in;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    opacity: 0.6;
+  }
+
+  &:active {
+    opacity: 0.2;
+  }
+}
