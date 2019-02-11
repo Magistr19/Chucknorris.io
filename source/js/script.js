@@ -14,7 +14,7 @@ getCategories();
 
 
 
-rdmJokeBtn.addEventListener('click', function(evt) {
+rdmJokeBtn.addEventListener('click', function(evt) { // Если на Random Joke кнопку нажали
   evt.preventDefault();
 
   let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
@@ -38,23 +38,23 @@ rdmJokeBtn.addEventListener('click', function(evt) {
 
   let randJoke = JSON.parse(this.responseText).value; // Получил строку рандомной шутки
   randJoke = '"' + randJoke + '"'; // Добавил кавычки
-  jokeDesc.innerHTML = randJoke;
+  jokeDesc.innerHTML = randJoke; // Записал шутку в элемент
   }
 });
 
-showMoreBtn.addEventListener('click', function(evt) {
-  if (hiddenCategories.length === 0) {
+showMoreBtn.addEventListener('click', function(evt) { //Если на more categories кнопку нажали
+  if (hiddenCategories.length === 0) { //Если нету доп. категорий
     return;
   }
 
-  if (!showMoreBtn.classList.contains('side-nav__show-more--opened')) {
-    hiddenCategories.forEach(function(elem) {
-      elem.classList.remove('side-nav__item--hidden');
+  if (!showMoreBtn.classList.contains('side-nav__show-more--opened')) { //Если кнопка не раскрыла список
+    hiddenCategories.forEach(function(elem) { // Перебираем массив дополнительных категорий
+      elem.classList.remove('side-nav__item--hidden'); // Каждому убираем скрывающий класс
     });
 
     showMoreBtn.classList.add('side-nav__show-more--opened');
     showMoreBtn.innerHTML = 'close';
-  } else {
+  } else { // Иначе все наоборот
     hiddenCategories.forEach(function(elem) {
       elem.classList.add('side-nav__item--hidden');
     });
@@ -83,11 +83,11 @@ function getCategories() {
 }
 
 function fillCategories() {
-  categories.forEach(function (elem, index) {
-    let sideNavItem = document.createElement('li');
+  categories.forEach(function (elem, index) { // Перебираю все категории
+    let sideNavItem = document.createElement('li'); // Создаю элемент на странице и заполняю его классами и содержимым категории
     sideNavItem.classList.add('side-nav__item');
 
-    if (index > 9) {
+    if (index > 9) { // Если дошли дальше 10-го элемента, скрываем из разметки и записываем в массив
       sideNavItem.classList.add('side-nav__item--hidden');
       hiddenCategories.push(sideNavItem);
     }
@@ -97,7 +97,7 @@ function fillCategories() {
 
     sideNavItem.appendChild(sideNavBtn);
 
-    sideNavBtn.addEventListener('click', function(evt) {
+    sideNavBtn.addEventListener('click', function(evt) { // Вешаем событие на каждую кнопку
       let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
       let categoryText = sideNavBtn.innerHTML;
       let urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
