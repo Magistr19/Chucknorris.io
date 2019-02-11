@@ -25,7 +25,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-svgstore": "^7.0.0",
-    "gulp-uglify": "^3.0.1",
+    "gulp-uglifyes": "^0.2.1",
     "gulp-webp": "^3.0.0",
     "posthtml-include": "^1.2.0",
     "run-sequence": "^2.2.1"

@@ -30,8 +30,8 @@ var minify = require("gulp-csso");
 /* Конкатенация отдельных файлов в единый */
 var concat = require('gulp-concat');
 
-/* Минификация JS*/
-var uglify = require("gulp-uglify");
+/* Минификация JS с поддержкой ES6*/
+var uglify = require("gulp-uglifyes");
 
 /* Отдельный плагин для переименования файла */
 var rename = require("gulp-rename");
@@ -95,7 +95,10 @@ gulp.task("style", function() {
 gulp.task("scripts", function () {
   return gulp.src("source/js/**/*.js")
     .pipe(plumber())
-    .pipe(uglify())
+    .pipe(uglify({
+      mangle: false,
+      ecma: 6
+    }))
     .pipe(rename({suffix: ".min"}))
     .pipe(gulp.dest("build/js"))
     .pipe(server.stream());

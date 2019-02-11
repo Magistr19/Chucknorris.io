@@ -1,25 +1,28 @@
 ﻿'use strict';
 
-var sideNav = document.querySelector('.side-nav__list');
-var rdmJokeBtn = document.querySelector('#rdmJokeBtn');
-var jokeDesc = document.querySelector('#jokeDesc');
-var currentCategory;
-var categories;
-var hiddenCategories = [];
+let sideNav = document.querySelector('.side-nav__list');
+let rdmJokeBtn = document.querySelector('#rdmJokeBtn');
+let jokeDesc = document.querySelector('#jokeDesc');
+let showMoreBtn = document.querySelector('#showMoreBtn');
+
+let currentCategory;
+let categories;
+let hiddenCategories = [];
+
 getCategories();
 
 
 
 
-rdmJokeBtn.addEventListener('click', function (evt) {
+rdmJokeBtn.addEventListener('click', function(evt) {
   evt.preventDefault();
 
-  var xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
+  let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
   if (!currentCategory) {
     xhr.open('GET', 'https://api.chucknorris.io/jokes/random', true);
   } else {
-    var categoryText = '';//??!!
-    var urlCategory = 'https://api.chucknorris.io/jokes/random?category={' + categoryText + '}';
+    let categoryText = currentCategory.querySelector('button').innerHTML;
+    let urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
     xhr.open('GET', urlCategory, true);
   }
 
@@ -33,15 +36,38 @@ rdmJokeBtn.addEventListener('click', function (evt) {
     return;
   }
 
-  var randJoke = JSON.parse(this.responseText).value; // Получил строку рандомной шутки
+  let randJoke = JSON.parse(this.responseText).value; // Получил строку рандомной шутки
   randJoke = '"' + randJoke + '"'; // Добавил кавычки
   jokeDesc.innerHTML = randJoke;
   }
 });
 
+showMoreBtn.addEventListener('click', function(evt) {
+  if (hiddenCategories.length === 0) {
+    return;
+  }
+
+  if (!showMoreBtn.classList.contains('side-nav__show-more--opened')) {
+
+  hiddenCategories.forEach(function(elem) {
+    elem.classList.remove('side-nav__item--hidden');
+  });
+
+
+  showMoreBtn.classList.add('side-nav__show-more--opened');
+  showMoreBtn.innerHTML = 'close';
+  } else {
+    hiddenCategories.forEach(function(elem) {
+      elem.classList.add('side-nav__item--hidden');
+    });
+
+    showMoreBtn.classList.remove('side-nav__show-more--opened');
+    showMoreBtn.innerHTML = 'more';
+  }
+});
 
 function getCategories() {
-  var xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
+  let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
   xhr.open('GET', 'https://api.chucknorris.io/jokes/categories', true);
   xhr.send();
 
@@ -59,8 +85,8 @@ function getCategories() {
 }
 
 function fillCategories() {
-  for (var i = 0; i < categories.length; i++) {
-    var sideNavItem = document.createElement('li');
+  for (let i = 0; i < categories.length; i++) {
+    let sideNavItem = document.createElement('li');
     sideNavItem.classList.add('side-nav__item');
 
     if (i > 9) {
@@ -68,15 +94,15 @@ function fillCategories() {
       hiddenCategories.push(sideNavItem);
     }
 
-    var sideNavBtn = document.createElement('button');
+    let sideNavBtn = document.createElement('button');
     sideNavBtn.innerHTML = categories[i];
 
     sideNavItem.appendChild(sideNavBtn);
 
     sideNavBtn.addEventListener('click', function(evt) {
-      var xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
-      var categoryText = sideNavBtn.innerHTML;
-      var urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
+      let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
+      let categoryText = sideNavBtn.innerHTML;
+      let urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
       xhr.open('GET', urlCategory, true);
       xhr.send();
 
@@ -88,9 +114,14 @@ function fillCategories() {
         return;
       }
 
-      sideNavItem.classList.add('side-nav__item--current');
+      if (currentCategory) {
+        currentCategory.classList.remove('side-nav__item--current');
+      }
 
-      var joke = JSON.parse(this.responseText).value; // Получаем шутку
+      sideNavItem.classList.add('side-nav__item--current');
+      currentCategory = sideNavItem;
+
+      let joke = JSON.parse(this.responseText).value; // Получаем шутку
       joke = '"' + joke + '"'; // Добавил кавычки
       jokeDesc.innerHTML = joke;
       }
