@@ -4,11 +4,9 @@
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Title of the page</title>
+  <title>Chucknorris.io</title>
   <link rel="preload" href="scc/style.min.css" as="style">
-  <!-- <link rel="preload" href="fonts/font-name.woff2" as="font" type="font/woff2"> -->
   <link rel="stylesheet" type="text/css" href="css/style.min.css">
-  <!-- <script src="js/picturefill.min.js"></script> -->
 </head>
 <body class="no-js">
 <main class="main-index">
@@ -17,7 +15,7 @@
   <div class="content-wrapper">
     <nav class="side-nav">
       <ul class="side-nav__list">
-        <li class="side-nav__item">
+        <!-- <li class="side-nav__item">
           <button>explicit</button>
         </li>
         <li class="side-nav__item">
@@ -46,15 +44,15 @@
         </li>
         <li class="side-nav__item">
             <button>animal</button>
-        </li>
+        </li> -->
       </ul>
       <button class="side-nav__show-more">more</span>
     </nav>
     <section class="norris-joke">
       <div class="norris-joke__wrapper">
-        <h2 class="norris-joke__description">"Some people like to eat frogs' legs. Chuck Norris likes to eat lizard legs. Hence, snakes"</h2>
+        <h2 class="norris-joke__description" id="jokeDesc">"Some people like to eat frogs' legs. Chuck Norris likes to eat lizard legs. Hence, snakes"</h2>
       </div>
-      <button class="norris-joke__random-btn">Random joke</button>
+      <button class="norris-joke__random-btn" id="rdmJokeBtn">Random joke</button>
     </section>
   </div>
 </main>

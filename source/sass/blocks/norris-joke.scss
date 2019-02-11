@@ -24,6 +24,7 @@
   @include h-reset;
 
   box-sizing: border-box;
+  width: 490px;
   margin-top: 27px;
   margin-bottom: 39px;
   padding-left: 40px;
@@ -32,6 +33,7 @@
   font-size: 36px;
   line-height: 40px;
   text-align: center;
+  word-wrap: break-word;
 }
 
 .norris-joke__random-btn {
