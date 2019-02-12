@@ -83,7 +83,7 @@ function getCategories() {
 }
 
 function fillCategories() {
-  categories.forEach(function (elem, index) { // Перебираю все категории
+    categories.forEach(function (elem, index) { // Перебираю все категории
     let sideNavItem = document.createElement('li'); // Создаю элемент на странице и заполняю его классами и содержимым категории
     sideNavItem.classList.add('side-nav__item');
 
@@ -97,34 +97,36 @@ function fillCategories() {
 
     sideNavItem.appendChild(sideNavBtn);
 
-    sideNavBtn.addEventListener('click', function(evt) { // Вешаем событие на каждую кнопку
-      let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
-      let categoryText = sideNavBtn.innerHTML;
-      let urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
-      xhr.open('GET', urlCategory, true);
-      xhr.send();
-
-      xhr.onreadystatechange = function() {
-      if (this.readyState != 4) return;
-
-      if (this.status != 200) { // Если запрос не удался
-        alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
-        return;
-      }
-
-      if (currentCategory) {
-        currentCategory.classList.remove('side-nav__item--current');
-      }
-
-      sideNavItem.classList.add('side-nav__item--current');
-      currentCategory = sideNavItem;
-
-      let joke = JSON.parse(this.responseText).value; // Получаем шутку
-      joke = '"' + joke + '"'; // Добавил кавычки
-      jokeDesc.innerHTML = joke;
-      }
-    });
+    sideNavBtn.addEventListener('click', sideNavBtnCallBack);
 
     sideNav.appendChild(sideNavItem);
   });
+
+  function sideNavBtnCallBack(evt) { // Колбек для кнопки
+    let xhr = new XMLHttpRequest(); // Создаю xmlhttp запрос
+    let categoryText = evt.target.innerHTML;
+    let urlCategory = 'https://api.chucknorris.io/jokes/random?category=' + categoryText;
+    xhr.open('GET', urlCategory, true);
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+    if (this.readyState != 4) return;
+
+    if (this.status != 200) { // Если запрос не удался
+      alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+      return;
+    }
+
+    if (currentCategory) {
+      currentCategory.classList.remove('side-nav__item--current');
+    }
+
+    evt.target.parentElement.classList.add('side-nav__item--current'); //Вешаем лишке активный класс
+    currentCategory = evt.target.parentElement;
+
+    let joke = JSON.parse(this.responseText).value; // Получаем шутку
+    joke = '"' + joke + '"'; // Добавил кавычки
+    jokeDesc.innerHTML = joke;
+    }
+ }
 }
